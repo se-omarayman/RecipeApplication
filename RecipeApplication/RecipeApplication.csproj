@@ -16,4 +16,8 @@
         <PackageReference Version="5.0.0" Include="Microsoft.EntityFrameworkCore.Tools" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+    </ItemGroup>
+
 </Project>
