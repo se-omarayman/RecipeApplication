@@ -69,7 +69,14 @@ namespace RecipeApplication
 				})
 				.SingleOrDefaultAsync();
 		}
-
+		
+        public async Task<bool> DoesRecipeExistAsync(int id)
+        {
+            return await _context.Recipes
+                .Where(r => !r.IsDeleted)
+                .Where(r => r.RecipeId == id)
+                .AnyAsync();
+        }
 		/// <summary>
 		/// Create a new recipe
 		/// </summary>
@@ -95,6 +102,7 @@ namespace RecipeApplication
 			if (recipe.IsDeleted) { throw new Exception("Unable to update a deleted recipe"); }
 
 			cmd.UpdateRecipe(recipe);
+            recipe.LastModified = DateTimeOffset.UtcNow;
 			await _context.SaveChangesAsync();
 		}
 

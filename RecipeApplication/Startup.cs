@@ -26,11 +26,12 @@ namespace RecipeApplication
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<AppDbContext>(options =>
-				//options.UseSqlite(Configuration.GetConnectionString("SqlLiteConnection"))
-				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+				options.UseSqlite(Configuration.GetConnectionString("SqlLiteConnection"))
+				// options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
 			);
 
 			services.AddRazorPages();
+            services.AddControllers();
 
 			services.AddScoped<RecipeService>();
 		}
@@ -59,6 +60,7 @@ namespace RecipeApplication
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
+                endpoints.MapControllers();
 			});
 		}
 	}
