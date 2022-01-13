@@ -30,6 +30,9 @@ namespace RecipeApplication
 				// options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
 			);
 
+			services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddEntityFrameworkStores<AppDbContext>();
+
 			services.AddRazorPages();
             services.AddControllers();
 
@@ -54,7 +57,7 @@ namespace RecipeApplication
 			app.UseStaticFiles();
 
 			app.UseRouting();
-
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
