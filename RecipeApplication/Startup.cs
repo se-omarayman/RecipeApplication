@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RecipeApplication.Authorization;
 using RecipeApplication.Data;
 
 namespace RecipeApplication
@@ -32,11 +34,14 @@ namespace RecipeApplication
 
 			services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<AppDbContext>();
-
+			services.AddAuthorization(options => options.AddPolicy("CanManageRecipe",
+				builder => builder.AddRequirements(new IsRecipeOwnerRequirement())));
+			
 			services.AddRazorPages();
             services.AddControllers();
 
 			services.AddScoped<RecipeService>();
+			services.AddScoped<IAuthorizationHandler, IsRecipeOwnerHandler>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

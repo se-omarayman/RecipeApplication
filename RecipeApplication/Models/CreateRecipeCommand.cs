@@ -9,7 +9,7 @@ namespace RecipeApplication.Models
 	{
 		public IList<CreateIngredientCommand> Ingredients { get; set; } = new List<CreateIngredientCommand>();
 
-		public Recipe ToRecipe()
+		public Recipe ToRecipe(ApplicationUser createdBy)
 		{
 			return new Recipe
 			{
@@ -18,7 +18,8 @@ namespace RecipeApplication.Models
 				Method = Method,
 				IsVegetarian = IsVegetarian,
 				IsVegan = IsVegan,
-				Ingredients = Ingredients?.Select(x => x.ToIngredient()).ToList()
+				Ingredients = Ingredients?.Select(x => x.ToIngredient()).ToList(),
+				CreatedById = createdBy.Id
 			};
 		}
 	}

@@ -13,6 +13,7 @@ namespace RecipeApplication.Data
 		public bool IsVegetarian { get; set; }
 		public bool IsVegan { get; set; }
         public DateTimeOffset LastModified { get; set; }
+        public string CreatedById { get; set; }
 
 		public ICollection<Ingredient> Ingredients { get; set; }
 	}

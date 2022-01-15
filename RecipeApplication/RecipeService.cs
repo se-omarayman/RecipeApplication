@@ -19,6 +19,11 @@ namespace RecipeApplication
 			_logger = factory.CreateLogger<RecipeService>();
 		}
 
+		public async Task<Recipe> GetRecipe(int id)
+		{
+			return await _context.Recipes.FindAsync(id);
+		}
+
 		public async Task<List<RecipeSummaryViewModel>> GetRecipes()
 		{
 			return await _context.Recipes
@@ -82,9 +87,9 @@ namespace RecipeApplication
 		/// </summary>
 		/// <param name="cmd"></param>
 		/// <returns>The id of the new recipe</returns>
-		public async Task<int> CreateRecipe(CreateRecipeCommand cmd)
+		public async Task<int> CreateRecipe(CreateRecipeCommand cmd, ApplicationUser createdBy)
 		{
-			var recipe = cmd.ToRecipe();
+			var recipe = cmd.ToRecipe(createdBy);
 			_context.Add(recipe);
 			await _context.SaveChangesAsync();
 			return recipe.RecipeId;
